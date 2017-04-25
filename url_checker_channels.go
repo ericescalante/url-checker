@@ -9,15 +9,6 @@ import (
 
 var urls []string
 
-func doGet(url string) {
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Printf("%s ---> %s\n", url, resp.Status)
-	}
-}
-
 func loadUrls() {
 	file, _ := os.Open("top_100.csv")
 	defer file.Close()
@@ -28,10 +19,23 @@ func loadUrls() {
 	}
 }
 
+func doGet(url string, messages chan string) {
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		messages <- fmt.Sprintf("%s ---> %s", url, resp.Status)
+	}
+}
+
 func main() {
 	loadUrls()
+	messages := make(chan string)
 	for _, url := range urls {
-		doGet(url)
+		go doGet(url, messages)
+	}
+	for i := 1; i <= len(urls); i++ {
+		fmt.Println(<-messages)
 	}
 	fmt.Println("done!")
 }
