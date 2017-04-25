@@ -33,5 +33,5 @@ func main() {
 	for _, url := range urls {
 		doGet(url)
 	}
-	fmt.Println("done!")
+	fmt.Println("Done! (╯°□°)╯︵ ┻━┻")
 }

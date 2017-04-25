@@ -45,5 +45,5 @@ func main() {
 		pool(i)
 	}
 	wg.Wait()
-	fmt.Println("done!")
+	fmt.Println("Done! (╯°□°)╯︵ ┻━┻ ︵ ╯(°□° ╯)")
 }

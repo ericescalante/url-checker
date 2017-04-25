@@ -19,23 +19,19 @@ func loadUrls() {
 	}
 }
 
-func doGet(url string, messages chan string) {
+func doGet(url string) {
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		messages <- fmt.Sprintf("%s ---> %s", url, resp.Status)
+		fmt.Sprintf("%s ---> %s", url, resp.Status)
 	}
 }
 
 func main() {
 	loadUrls()
-	messages := make(chan string)
 	for _, url := range urls {
-		go doGet(url, messages)
+		go doGet(url)
 	}
-	for i := 1; i <= len(urls); i++ {
-		fmt.Println(<-messages)
-	}
-	fmt.Println("Done! (/¯◡ ‿ ◡)/¯ ~ ┻━┻")
+	fmt.Println("Done! ‎(ﾉಥ益ಥ）ﾉ﻿ ┻━┻")
 }
